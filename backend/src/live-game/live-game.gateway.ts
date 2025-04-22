@@ -1,7 +1,8 @@
 import {
   WebSocketGateway,
   WebSocketServer,
-  SubscribeMessage
+  SubscribeMessage,
+  MessageBody
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
@@ -11,24 +12,22 @@ export class LiveGameGateway {
 
   @SubscribeMessage('join-game')
   handleJoinGame(
-    client: Socket,
-    payload: { gameId: number; playerName: string; isHost: boolean },
+    @MessageBody("gameId") gameId: number,
+    @MessageBody("playerName") playerName: string,
+    @MessageBody("isHost") isHost: boolean
   ) {}
 
   @SubscribeMessage('submit-answer')
   handleSubmitAnswer(
-    client: Socket,
-    payload: {
-      gameId: number;
-      playerName: string;
-      questionId: number;
-      answer: number;
-    },
+    @MessageBody("gameId") gameId: number,
+    @MessageBody("playerName") playerName: string,
+    @MessageBody("questionId") questionId: number,
+    @MessageBody("answer") answer: number
   ) {}
 
   @SubscribeMessage('start-game')
-  handleStartGame(client: Socket, payload: { gameId: number }) {}
+  handleStartGame(@MessageBody("gameId") gameId: number) {}
 
   @SubscribeMessage('next-state')
-  handleNextState(client: Socket, payload: { gameId: number }) {}
+  handleNextState(@MessageBody("gameId") gameId: number) {}
 }
