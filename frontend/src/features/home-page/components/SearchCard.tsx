@@ -6,7 +6,7 @@ const SearchCard = () => {
                      title="Search Questions" 
                      description="Search for questions to create a live game."
                      buttonText="Search"
-                     to="search" />
+                     to="/search" />
 }
 
 export default SearchCard;

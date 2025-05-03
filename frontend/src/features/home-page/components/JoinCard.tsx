@@ -6,7 +6,7 @@ const JoinCard = () => {
                      title="Join Game" 
                      description="Enter a code to join a live game."
                      buttonText="Join"
-                     to="join" />
+                     to="/join" />
 }
 
 export default JoinCard;
