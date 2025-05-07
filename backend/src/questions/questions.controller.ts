@@ -1,17 +1,32 @@
-import {Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
+import {QuestionsService} from "./questions.service";
 
 const QUESTION_LIMIT = 20;
 
 @Controller('questions')
 export class QuestionsController {
+  constructor(private questionService: QuestionsService) {}
+
   @Post()
-  createQuestion(
+  @HttpCode(HttpStatus.CREATED)
+  async createQuestion(
     @Body('question') question: string,
     @Body('options') options: string[],
     @Body('answer') answer: number,
     @Body('tags') tags: string[],
   ) {
-
+    await this.questionService.addQuestion({ question, options, answer, tags });
   }
 
   @Get(":id")
