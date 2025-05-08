@@ -10,7 +10,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import {QuestionsService} from "./questions.service";
+import { QuestionsService } from './questions.service';
 
 const QUESTION_LIMIT = 20;
 
