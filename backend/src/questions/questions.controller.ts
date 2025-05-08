@@ -10,9 +10,12 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { QuestionsService } from './questions.service';
+import { QuestionData, QuestionsService } from './questions.service';
+import { Question } from './questions.schema';
 
 const QUESTION_LIMIT = 20;
+
+const OptionalParseIntPipe = new ParseIntPipe({ optional: true });
 
 @Controller('questions')
 export class QuestionsController {
@@ -29,20 +32,20 @@ export class QuestionsController {
     await this.questionService.addQuestion({ question, options, answer, tags });
   }
 
-  @Get(":id")
-  getQuestion(@Param('id', ParseIntPipe) id: number) {
-
-  }
-
-  @Put(":id")
-  updateQuestion(@Param('id', ParseIntPipe) id: number) {
-
-  }
-
-  @Get("search")
-  searchQuestion(
+  @Get('search')
+  async searchQuestion(
     @Query('query') query: string,
-    @Query('limit', ParseIntPipe) limit: number = QUESTION_LIMIT,
-    @Query('page', ParseIntPipe) page: number = 0,
-  ) {}
+    @Query('limit', OptionalParseIntPipe) limit: number = QUESTION_LIMIT,
+    @Query('page', OptionalParseIntPipe) page: number = 0,
+  ) {
+    return await this.questionService.fetchQuestions(query, limit, page);
+  }
+
+  @Get(':id')
+  getQuestion(@Param('id', ParseIntPipe) id: number) {
+    console.log(id);
+  }
+
+  @Put(':id')
+  updateQuestion(@Param('id', ParseIntPipe) id: number) {}
 }

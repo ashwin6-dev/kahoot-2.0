@@ -12,9 +12,9 @@ import { EmbeddingsService } from '../embeddings/embeddings.service';
       {
         name: Question.name,
         schema: QuestionSchema,
-      }
+      },
     ]),
-    EmbeddingsModule
+    EmbeddingsModule,
   ],
   controllers: [QuestionsController],
   providers: [QuestionsService, EmbeddingsService],
