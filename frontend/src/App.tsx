@@ -6,7 +6,7 @@ import SearchPage from "@/features/search-page/SearchPage.tsx";
 
 export default function App() {
     return (
-        <ThemeProvider defaultTheme="dark">
+        <ThemeProvider defaultTheme="light">
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/join" element={<JoinPage />} />
