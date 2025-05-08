@@ -10,7 +10,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { QuestionData, QuestionsService } from './questions.service';
+import { QuestionsService } from './questions.service';
 import { Question } from './questions.schema';
 
 const QUESTION_LIMIT = 20;
@@ -37,7 +37,7 @@ export class QuestionsController {
     @Query('query') query: string,
     @Query('limit', OptionalParseIntPipe) limit: number = QUESTION_LIMIT,
     @Query('page', OptionalParseIntPipe) page: number = 0,
-  ) {
+  ): Promise<Question[]> {
     return await this.questionService.fetchQuestions(query, limit, page);
   }
 

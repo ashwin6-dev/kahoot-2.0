@@ -30,7 +30,7 @@ export class QuestionsService {
     description: string,
     limit: number,
     page: number,
-  ): Promise<QuestionData[]> {
+  ): Promise<Question[]> {
     const queryVector = await this.embeddingsService.embedText(
       description,
       true,
