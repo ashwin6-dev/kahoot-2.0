@@ -1,3 +1,5 @@
 token.txt
 .idea
 frontend
+venv
+__pycache__
