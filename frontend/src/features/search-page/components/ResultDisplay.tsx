@@ -1,20 +1,26 @@
 import SearchResult from "@/features/search-page/components/SearchResult.tsx";
 import {Result, useSearchPageContext} from "../contexts/SearchPageContext";
+import {useEffect, useState} from "react";
 
 const ResultDisplay = ({results}: { results: Result[] }) => {
-    const {handleSelect} = useSearchPageContext();
+    const {selectedMap, handleSelect} = useSearchPageContext();
 
     return (
-        <>
-            {
-                results.map(result => (
-                    <SearchResult question={result.question}
-                                  answer={result.answer}
-                                  tags={result.tags}
-                                  onSelect={() => handleSelect(result)}/>
-                ))
+        <div className="grid grid-cols-3 space-x-4 space-y-4">
+            { results.length === 0 ? "No results" :
+                <>
+                    {
+                        results.map(result => (
+                            !selectedMap.get(result.question)
+                            && <SearchResult question={result.question}
+                                          answer={result.options[result.answer]}
+                                          tags={result.tags}
+                                          onSelect={() => handleSelect(result)}/>
+                        ))
+                    }
+                </>
             }
-        </>
+        </div>
     );
 }
 

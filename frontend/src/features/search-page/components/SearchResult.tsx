@@ -16,7 +16,7 @@ const SearchResult =  ({ question, answer, tags, onSelect }: SearchResultProps) 
                 <CardDescription>{ answer }</CardDescription>
             </CardHeader>
             <CardContent>
-                { tags.map(tag => <Badge className="mr-4">{ tag }</Badge>) }
+                { tags.map(tag => <Badge className="bg-secondary mr-4">{ tag }</Badge>) }
             </CardContent>
         </Card>
     )

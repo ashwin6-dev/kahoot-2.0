@@ -3,6 +3,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {Result, useSearchPageContext} from "@/features/search-page/contexts/SearchPageContext.tsx";
 import {Alert, AlertTitle, AlertDescription} from "@/components/ui/alert.tsx";
 import {ListTodo} from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const SelectionDisplay = () => {
     const { selectedList, handleSelect } = useSearchPageContext();
@@ -14,18 +15,20 @@ const SelectionDisplay = () => {
         </CardHeader>
         <CardContent>
             { selectedList.length === 0 ? "No questions selected" :
-                <div className="space-y-1">
-                    {
-                        selectedList.map(
-                            (selection: Result) =>
-                                <Alert onClick={() => handleSelect(selection)} className="hover:bg-input/30 cursor-pointer">
-                                    <ListTodo />
-                                    <AlertTitle>{ selection.question }</AlertTitle>
-                                    <AlertDescription>{ selection.answer }</AlertDescription>
-                                </Alert>
-                            )
-                    }
-                </div>
+                <ScrollArea className="h-64">
+                    <div className="space-y-1">
+                            {
+                                selectedList.map(
+                                    (selection: Result) =>
+                                        <Alert onClick={() => handleSelect(selection)} className="hover:bg-input/30 hover:text-underline cursor-pointer group">
+                                            <ListTodo />
+                                            <AlertTitle className="group-hover:line-through">{ selection.question }</AlertTitle>
+                                            <AlertDescription className="group-hover:line-through">{ selection.options[selection.answer] }</AlertDescription>
+                                        </Alert>
+                                    )
+                            }
+                    </div>
+                </ScrollArea>
             }
         </CardContent>
         <CardFooter>
