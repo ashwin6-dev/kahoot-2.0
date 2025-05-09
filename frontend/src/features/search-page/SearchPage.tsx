@@ -7,17 +7,19 @@ import SelectionDisplay from "@/features/search-page/components/SelectionDisplay
 import {SearchPageContextProvider} from "@/features/search-page/contexts/SearchPageContext.tsx";
 import {useState} from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {requestBackend} from "@/lib/utils.ts";
+import {BackendRequest} from "@/lib/backendRequest.ts";
 
 const SearchPage = () => {
     const [description, setDescription] = useState<string>("");
     const [results, setResults] = useState<any>([]);
 
     const searchQuestions = async () => {
-        const response = await fetch("http://localhost:3000/questions/search?query=" + description);
+        const searchResults = await BackendRequest.for("questions/search")
+            .withParam("query", description)
+            .send();
 
-        const data = await response.json();
-
-        setResults(data);
+        setResults(searchResults);
     }
 
 

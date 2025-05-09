@@ -2,9 +2,17 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} f
 import {Button} from "@/components/ui/button.tsx";
 import {Result, useSearchPageContext} from "@/features/search-page/contexts/SearchPageContext.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {BackendRequest} from "@/lib/backendRequest.ts";
 
 const SelectionDisplay = () => {
     const { selectedList, handleSelect } = useSearchPageContext();
+
+    const createGame = async () => {
+        const { gameId } = await BackendRequest.for("games")
+            .withMethod("POST")
+            .withBody({ questions: selectedList })
+            .send();
+    }
 
     return <Card>
         <CardHeader>
@@ -29,7 +37,7 @@ const SelectionDisplay = () => {
             }
         </CardContent>
         <CardFooter>
-            <Button>Create Game</Button>
+            <Button onClick={createGame}>Create Game</Button>
         </CardFooter>
     </Card>
 }
