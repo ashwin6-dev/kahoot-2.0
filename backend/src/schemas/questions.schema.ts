@@ -17,7 +17,7 @@ export class Question {
   @Prop({ required: true })
   tags: string[];
 
-  @Prop({ required: true})
+  @Prop({ required: true })
   vector: number[];
 }
 

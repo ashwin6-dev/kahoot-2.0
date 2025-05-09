@@ -11,7 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
-import { Question } from './questions.schema';
+import { Question } from '../schemas/questions.schema';
 
 const QUESTION_LIMIT = 20;
 

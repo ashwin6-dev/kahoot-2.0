@@ -7,11 +7,18 @@ import {
   Param,
   ParseIntPipe,
 } from '@nestjs/common';
+import { GamesService } from './games.service';
+import {Question} from "../schemas/questions.schema";
 
 @Controller('games')
 export class GamesController {
+  constructor(private gamesService: GamesService) {}
+
   @Post()
-  createGame(@Body('questions') questions: number[]) {}
+  async createGame(@Body('questions') questions: Question[]) {
+    const { gameId } = await this.gamesService.createGame(questions);
+    return { gameId };
+  }
 
   @Get(':id')
   getGameState(@Param('id', ParseIntPipe) id: number) {}

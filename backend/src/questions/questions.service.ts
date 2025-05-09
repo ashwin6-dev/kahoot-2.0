@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Question } from './questions.schema';
+import { Question } from '../schemas/questions.schema';
 import { Model } from 'mongoose';
 import { EmbeddingsService } from '../embeddings/embeddings.service';
 
@@ -45,7 +45,7 @@ export class QuestionsService {
           numCandidates: 100, // number of chunks to consider for the comparison
           limit: limit, // the number of returned results on score order from high to low
         },
-      }
+      },
     ]);
   }
 }
