@@ -3,9 +3,10 @@ import HomeCard from "./HomeCard"
 
 const CreateCard = ({ ...props }) => {
     return <HomeCard icon={ <PencilLine /> } 
-                     title="Write a Question" 
-                     description="Write a question to add to the database."
-                     buttonText="Write"
+                     title="Contribute a Question"
+                     color="destructive"
+                     description="Add your own questions to help grow our database and challenge others."
+                     buttonText="Contribute"
                      to="/create"
                      {...props}/>
 }

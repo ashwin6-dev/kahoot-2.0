@@ -24,7 +24,6 @@ const SearchPage = () => {
     return (
         <SearchPageContextProvider>
             <Container containerTitle="Search Questions">
-                <NavBreadcrumb/>
                 <div className="flex space-x-4">
                     <div className="space-y-4 w-2/3">
                         <div className="flex space-x-4">

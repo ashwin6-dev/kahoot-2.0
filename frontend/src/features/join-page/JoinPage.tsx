@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 const JoinPage = () => {
     return (
         <Container containerTitle="Join Game">
-            <NavBreadcrumb/>
             <Label>Code</Label>
             <Input placeholder="Enter code"></Input>
 

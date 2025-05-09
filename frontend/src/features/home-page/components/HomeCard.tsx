@@ -6,22 +6,25 @@ import { Link } from "react-router-dom"
 interface HomeCardProps {
     icon: ReactNode,
     title: string,
+    color: string,
     description: string,
     buttonText: string,
     to: string
 }
 
-const HomeCard = ({ icon, title, description, buttonText, to, ...props }: HomeCardProps) => {
+const HomeCard = ({ icon, color, title, description, buttonText, to, ...props }: HomeCardProps) => {
     return (
-        <Card {...props} >
-            <CardHeader className="flex flex-col items-center justify-center">
-                { icon }
+        <Card {...props} className="flex flex-col h-full">
+            <CardHeader>
+                <div className={`inline-block bg-${color}/10 p-2 text-${color} w-full`}>
+                    { icon }
+                </div>
                 <CardTitle>{ title }</CardTitle>
                 <CardDescription>{ description }</CardDescription>
             </CardHeader>
-            <CardFooter className="flex flex-col items-center justify-center">
-                <Link to={to}>
-                    <Button>{ buttonText }</Button>
+            <CardFooter>
+                <Link to={to} className="w-full">
+                    <Button className="w-full" variant={color == "primary" ? "default" : color}>{ buttonText }</Button>
                 </Link>
             </CardFooter>
         </Card>
