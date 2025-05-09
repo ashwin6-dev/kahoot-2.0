@@ -33,7 +33,7 @@ const SearchPage = () => {
                                    onChange={(e) => setDescription(e.target.value)} />
                             <Button className="col-span-1" onClick={searchQuestions}>Search</Button>
                         </div>
-                        <ScrollArea className="rounded-md border p-4 h-2/5">
+                        <ScrollArea className="h-2/5">
                             <ResultDisplay results={results}/>
                         </ScrollArea>
                     </div>

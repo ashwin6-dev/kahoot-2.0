@@ -13,13 +13,13 @@ interface HomeCardProps {
 
 const HomeCard = ({ icon, title, description, buttonText, to, ...props }: HomeCardProps) => {
     return (
-        <Card {...props}>
-            <CardHeader>
+        <Card {...props} >
+            <CardHeader className="flex flex-col items-center justify-center">
                 { icon }
                 <CardTitle>{ title }</CardTitle>
                 <CardDescription>{ description }</CardDescription>
             </CardHeader>
-            <CardFooter>
+            <CardFooter className="flex flex-col items-center justify-center">
                 <Link to={to}>
                     <Button>{ buttonText }</Button>
                 </Link>

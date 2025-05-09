@@ -1,8 +1,6 @@
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Result, useSearchPageContext} from "@/features/search-page/contexts/SearchPageContext.tsx";
-import {Alert, AlertTitle, AlertDescription} from "@/components/ui/alert.tsx";
-import {ListTodo} from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const SelectionDisplay = () => {
@@ -20,11 +18,10 @@ const SelectionDisplay = () => {
                             {
                                 selectedList.map(
                                     (selection: Result) =>
-                                        <Alert onClick={() => handleSelect(selection)} className="hover:bg-input/30 hover:text-underline cursor-pointer group">
-                                            <ListTodo />
-                                            <AlertTitle className="group-hover:line-through">{ selection.question }</AlertTitle>
-                                            <AlertDescription className="group-hover:line-through">{ selection.options[selection.answer] }</AlertDescription>
-                                        </Alert>
+                                        <div onClick={() => handleSelect(selection)} className="transition-all ease-in-out duration-100 border p-3 hover:bg-destructive hover:text-underline cursor-pointer group">
+                                            <p className="transition-all ease-in-out duration-100 text-lg font-semibold group-hover:line-through group-hover:text-destructive-foreground">{ selection.question }</p>
+                                            <p className="transition-all ease-in-out duration-100 text-muted-foreground group-hover:line-through group-hover:text-destructive-foreground">{ selection.options[selection.answer] }</p>
+                                        </div>
                                     )
                             }
                     </div>

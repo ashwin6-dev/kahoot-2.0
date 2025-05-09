@@ -8,10 +8,10 @@ const HomePage = () => {
     return (
         <Container containerTitle="Mini Kahoot">
             <NavBreadcrumb/>
-            <div className="grid grid-cols-3 space-x-4">
-                <SearchCard />
-                <JoinCard />
-                <CreateCard />
+            <div className="grid grid-cols-3 space-x-8">
+                <SearchCard className="h-48"/>
+                <JoinCard className="h-48"/>
+                <CreateCard className="h-48"/>
             </div>
         </Container>
     )
