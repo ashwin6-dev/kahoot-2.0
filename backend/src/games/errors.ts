@@ -9,3 +9,9 @@ export const playerNameTaken = (id: number, player: string) => {
     `Player name ${player} is taken in game with ID "${id}"`
   );
 }
+
+export const playerTokenDoestNotExist = (id: number, token: number) => {
+  throw new BadRequestException(
+      `Token ${token} is not in game with ID "${id}"`
+  );
+}

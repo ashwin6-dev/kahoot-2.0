@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Game, Player } from '../schemas/games.schema';
 import { Model } from 'mongoose';
 import { Question } from '../schemas/questions.schema';
-import { gameNotFound, playerNameTaken } from './errors';
+import { gameNotFound, playerNameTaken, playerTokenDoestNotExist } from './errors';
 
 const GAME_ID_LENGTH = 6;
 const PLAYER_TOKEN_LENGTH = 10;
@@ -49,10 +49,12 @@ export class GamesService {
       return game.host;
     }
 
-    const foundPlayer: Player | undefined = game.players.find((player) => player.token === token);
+    const foundPlayer: Player | undefined = game.players.find(
+      (player) => player.token === token,
+    );
 
     if (!foundPlayer) {
-      return gameNotFound(gameId);
+      return playerTokenDoestNotExist(gameId, token);
     }
 
     return foundPlayer;
