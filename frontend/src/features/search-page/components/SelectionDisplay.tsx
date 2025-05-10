@@ -3,15 +3,29 @@ import {Button} from "@/components/ui/button.tsx";
 import {Result, useSearchPageContext} from "@/features/search-page/contexts/SearchPageContext.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {BackendRequest} from "@/lib/backendRequest.ts";
+import {useState} from "react";
+import {
+    AlertDialog, AlertDialogAction, AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription, AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 
 const SelectionDisplay = () => {
     const { selectedList, handleSelect } = useSearchPageContext();
+    const [hostName, setHostName] = useState<string>("");
 
     const createGame = async () => {
         const { gameId } = await BackendRequest.for("games")
             .withMethod("POST")
-            .withBody({ questions: selectedList })
+            .withBody({ questions: selectedList, hostName })
             .send();
+
+        localStorage.setItem("playerName", hostName);
+        window.location.href = `/lobby?gameId=${gameId}`;
     }
 
     return <Card>
@@ -37,7 +51,25 @@ const SelectionDisplay = () => {
             }
         </CardContent>
         <CardFooter>
-            <Button onClick={createGame}>Create Game</Button>
+            <AlertDialog>
+                <AlertDialogTrigger asChild>
+                    <Button>Create Game</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Enter Your Name as Host</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            <span>Hostname</span>
+                            <Input onChange={(e) => setHostName(e.target.value)}
+                                   placeholder="Enter your name..."/>
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={createGame}>Start Game</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </CardFooter>
     </Card>
 }

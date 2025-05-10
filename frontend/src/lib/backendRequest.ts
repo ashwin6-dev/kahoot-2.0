@@ -30,15 +30,28 @@ export class BackendRequest {
     }
 
     async send() {
-        const endpoint = this.endpoint + (this.params.length ? "?" + this.params.join("&") : "");
-        let headers = {
-            method: this.method
+        const url = BASE_BACKEND_URL + this.endpoint;
+        const queryParams = this.params.join('&');
+        const fullUrl = queryParams ? `${url}?${queryParams}` : url;
+
+        const headers = {
+            method: this.method,
+            'Content-Type': 'application/json',
+        };
+
+        let body: string | undefined;
+        if (this.method !== 'GET' && this.body) {
+            body = JSON.stringify(this.body);
+            headers['Content-Type'] = 'application/json';
         }
 
-        if (this.method != "GET") headers.body = this.body;
-
-        const response = await fetch(BASE_BACKEND_URL + endpoint, headers)
+        const response = await fetch(fullUrl, {
+            method: this.method,
+            headers,
+            body,
+        });
 
         return await response.json();
     }
+
 }

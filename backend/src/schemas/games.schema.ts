@@ -1,11 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ObjectId } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 import { Question } from './questions.schema';
 
-interface Player {
+@Schema({ _id: false })
+class PlayerSchema {
+  @Prop({ required: true })
   name: string;
+
+  @Prop({ required: true, default: 0 })
   score: number;
 }
+
+const Player = SchemaFactory.createForClass(PlayerSchema);
 
 @Schema()
 export class Game {
@@ -14,11 +20,14 @@ export class Game {
   @Prop({ required: true })
   gameId: number;
 
-  @Prop({ required: true })
+  @Prop({ type: [Types.ObjectId], ref: 'Question', required: true })
   questions: Question[];
 
-  @Prop({ required: true })
-  players: Player[];
+  @Prop({ type: Player, required: true })
+  host: PlayerSchema;
+
+  @Prop({ type: [Player], required: true })
+  players: PlayerSchema[];
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);
