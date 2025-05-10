@@ -22,8 +22,8 @@ export class GamesController {
     @Body('questions') questions: Question[],
     @Body('hostName') hostName: string,
   ) {
-    const { gameId } = await this.gamesService.createGame(questions, hostName);
-    return { gameId };
+    const { gameId, token } = await this.gamesService.createGame(questions, hostName);
+    return { gameId, token };
   }
 
   @Get('join/:id')
@@ -31,7 +31,7 @@ export class GamesController {
     @Param('id', ParseIntPipe) id: number,
     @Query('playerName') playerName: string
   ) {
-    await this.gamesService.joinGame(id, playerName);
+    return await this.gamesService.joinGame(id, playerName);
   }
 
   @Get(':id')

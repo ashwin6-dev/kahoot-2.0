@@ -5,14 +5,12 @@ import { Button } from "@/components/ui/button.tsx";
 import {BackendRequest} from "@/lib/backendRequest.ts";
 import {useState} from "react";
 
-// 228877
 const JoinPage = () => {
     const [playerName, setPlayerName] = useState<string>("");
     const [gameId, setGameId] = useState<string>(0);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const joinGame = async () => {
-        console.log(gameId);
         const data = await BackendRequest.for(`games/join/${gameId}`)
             .withParam("playerName", playerName)
             .send()
@@ -21,6 +19,7 @@ const JoinPage = () => {
             setErrorMessage(data.message);
         }else {
             setErrorMessage("");
+            localStorage.setItem("player-token", data.token);
             window.location.href = `/lobby?gameId=${gameId}`
         }
     }

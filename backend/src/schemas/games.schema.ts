@@ -3,15 +3,18 @@ import { ObjectId, Types } from 'mongoose';
 import { Question } from './questions.schema';
 
 @Schema({ _id: false })
-class PlayerSchema {
+export class Player {
   @Prop({ required: true })
   name: string;
 
   @Prop({ required: true, default: 0 })
   score: number;
+
+  @Prop({ required: true })
+  token: number;
 }
 
-const Player = SchemaFactory.createForClass(PlayerSchema);
+const PlayerSchema = SchemaFactory.createForClass(Player);
 
 @Schema()
 export class Game {
@@ -23,11 +26,11 @@ export class Game {
   @Prop({ type: [Types.ObjectId], ref: 'Question', required: true })
   questions: Question[];
 
-  @Prop({ type: Player, required: true })
-  host: PlayerSchema;
+  @Prop({ type: PlayerSchema, required: true })
+  host: Player;
 
-  @Prop({ type: [Player], required: true })
-  players: PlayerSchema[];
+  @Prop({ type: [PlayerSchema], required: true })
+  players: Player[];
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);

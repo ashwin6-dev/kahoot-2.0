@@ -7,12 +7,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EmbeddingsService } from './embeddings/embeddings.service';
 import { EmbeddingsModule } from './embeddings/embeddings.module';
 import * as dotenv from 'dotenv';
+import { LiveGameModule } from './live-game/live-game.module';
 dotenv.config();
 
 const uri: string = process.env.MONGODB_URI || '';
 
 @Module({
-  imports: [GamesModule, QuestionsModule, MongooseModule.forRoot(uri), EmbeddingsModule],
+  imports: [GamesModule, QuestionsModule, MongooseModule.forRoot(uri), EmbeddingsModule, LiveGameModule],
   controllers: [AppController],
   providers: [AppService, EmbeddingsService],
 })

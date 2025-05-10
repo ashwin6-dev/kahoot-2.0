@@ -19,12 +19,12 @@ const SelectionDisplay = () => {
     const [hostName, setHostName] = useState<string>("");
 
     const createGame = async () => {
-        const { gameId } = await BackendRequest.for("games")
+        const { gameId, token } = await BackendRequest.for("games")
             .withMethod("POST")
             .withBody({ questions: selectedList, hostName })
             .send();
 
-        localStorage.setItem("playerName", hostName);
+        localStorage.setItem("player-token", token);
         window.location.href = `/lobby?gameId=${gameId}`;
     }
 

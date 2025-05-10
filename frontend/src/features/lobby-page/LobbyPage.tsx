@@ -1,25 +1,18 @@
-import {useSearchParams} from "react-router-dom";
-import {useEffect} from "react";
-import {BackendRequest} from "@/lib/backendRequest";
-import {useState} from "react";
 import {Button} from "@/components/ui/button.tsx"
 import {ScrollArea} from "@/components/ui/scroll-area.tsx";
+import {useGameFetch} from "@/features/lobby-page/hooks/useGameFetch.ts";
+import {useJoinGame} from "@/features/lobby-page/hooks/useJoinGame.ts";
+import {useSocketEvent} from "@/hooks/socketHooks.ts";
+
 
 const LobbyPage = () => {
-    const [params] = useSearchParams();
-    const gameId = params.get("gameId");
-    const [hostName, setHostName] = useState<string>("");
-    const [players, setPlayers] = useState<string[]>([]);
+    const { hostName, gameId, players, addPlayer } = useGameFetch();
+    const playerToken = parseInt(localStorage.getItem("player-token") ?? "")
+    const { socket } = useJoinGame(gameId, playerToken);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const { host, players : fetchedPlayers } = await BackendRequest.for(`games/${gameId}`).send();
-            setHostName(host.name);
-            setPlayers(fetchedPlayers);
-        };
-
-        fetchData();
-    }, [gameId]);
+    useSocketEvent<any>("player-joined", ({ name }) => {
+        addPlayer(name);
+    })
 
     return (
         <div className="h-screen w-screen flex flex-col items-center bg-secondary text-white p-8 space-y-2">
@@ -31,8 +24,8 @@ const LobbyPage = () => {
                 <div className="flex flex-wrap space-x-4 justify-center space-y-16 mt-16 align-start">
                     {
                         players.map((player) =>
-                            <div className="transition all ease-in duration-100 cursor-pointer hover:bg-destructive flex justify-center group">
-                                <p className="text-xl font-bold tracking-tighter group-hover:line-through" key={player.name}>{ player.name }</p>
+                            <div className="transition all ease-in duration-100 cursor-pointer flex justify-center group">
+                                <p className="text-xl font-bold tracking-tighter group-hover:line-through" key={player}>{ player }</p>
                             </div>
                         )
                     }
