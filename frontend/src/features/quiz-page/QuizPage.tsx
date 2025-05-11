@@ -13,12 +13,8 @@ const QuizPage = () => {
                 <QuestionScreen state={gameState} context={context}/>
             }
 
-            { gameState.state === 'ROUND_SCORES' &&
+            { gameState.state !== 'QUESTION' &&
                 <RoundScores state={gameState} context={context}/>
-            }
-
-            { gameState.state === 'FINISHED' &&
-                <strong>FINISHED</strong>
             }
         </div>
     )
