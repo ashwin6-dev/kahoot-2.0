@@ -40,12 +40,4 @@ export class QuestionsController {
   ): Promise<Question[]> {
     return await this.questionService.fetchQuestions(query, limit, page);
   }
-
-  @Get(':id')
-  getQuestion(@Param('id', ParseIntPipe) id: number) {
-    console.log(id);
-  }
-
-  @Put(':id')
-  updateQuestion(@Param('id', ParseIntPipe) id: number) {}
 }

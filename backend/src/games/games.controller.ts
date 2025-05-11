@@ -38,13 +38,4 @@ export class GamesController {
   async getGameState(@Param('id', ParseIntPipe) id: number) {
     return await this.gamesService.getGame(id);
   }
-
-  @Get(':id/players/:name')
-  getPlayerInfo(
-    @Param('id', ParseIntPipe) gameId: number,
-    @Param('name') playerName: string,
-  ) {}
-
-  @Delete(':id')
-  removeGame(@Param('id') id: string) {}
 }
