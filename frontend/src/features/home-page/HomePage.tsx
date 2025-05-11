@@ -27,9 +27,9 @@ const HomePage = () => {
                 </div>
             </div>
             <div className="grid grid-cols-3 space-x-8 mt-16">
-                <SearchCard className="h-48"/>
-                <JoinCard className="h-48"/>
-                <CreateCard className="h-48"/>
+                <SearchCard />
+                <JoinCard />
+                <CreateCard />
             </div>
         </Container>
     )

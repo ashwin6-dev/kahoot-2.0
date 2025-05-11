@@ -16,7 +16,7 @@ const HomeCard = ({ icon, color, title, description, buttonText, to, ...props }:
     return (
         <Card {...props} className="flex flex-col h-full">
             <CardHeader>
-                <div className={`inline-block bg-${color}/10 p-2 text-${color} w-full`}>
+                <div className={`inline-block bg-${color} p-2 text-white w-full`}>
                     { icon }
                 </div>
                 <CardTitle>{ title }</CardTitle>

@@ -80,4 +80,10 @@ export class LiveGameGateway {
     await this.gameService.updateGameToNextState(gameId);
     this.server.to(gameId.toString()).emit('state-update');
   }
+
+  @SubscribeMessage('end-game')
+  async endGame(@MessageBody('gameId') gameId: number) {
+    this.gameService.deleteGame(gameId);
+    this.server.to(gameId.toString()).emit('end-game');
+  }
 }

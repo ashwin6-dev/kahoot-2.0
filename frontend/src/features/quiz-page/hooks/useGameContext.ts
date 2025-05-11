@@ -20,6 +20,8 @@ export const useGameContext = () => {
             gameId,
             token
         })
+
+        socket.on("end-game", () => window.location.href = "/");
     }, []);
 
     return { gameId, socket, token }

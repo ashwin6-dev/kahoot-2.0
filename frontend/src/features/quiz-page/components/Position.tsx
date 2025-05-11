@@ -1,4 +1,5 @@
 import {Button} from "@/components/ui/button.tsx";
+import {Link} from "react-router-dom";
 
 const Position = ({ state, context, position }) => {
     const positionWithSuffix = (p: number) => {
@@ -7,7 +8,7 @@ const Position = ({ state, context, position }) => {
     }
 
     const endGame = () => {
-        alert("done")
+        context.socket.emit("end-game", { gameId: context.gameId })
     }
 
     const { socket, gameId } = context;
@@ -17,10 +18,15 @@ const Position = ({ state, context, position }) => {
             <p className="text-xl tracking-tighter font-semibold">Your position</p>
             <p className="text-5xl font-bold tracking-tighter">{ positionWithSuffix(position) }</p>
             <br />
-            { state.isHost &&
-                (state.state === 'ROUND_SCORES' ?
-                    <Button onClick={() => socket.emit("next-state", { gameId })}>Next Round</Button>
-                :   <Button onClick={endGame}>End Game</Button>)
+            {
+                state.isHost &&
+                    (state.state === 'ROUND_SCORES' ?
+                        <Button onClick={() => socket.emit("next-state", { gameId })}>Next Round</Button>
+                    :   <Button onClick={endGame}>End Game</Button>)
+            }
+            {
+                !state.isHost && state.state === 'FINISHED'
+                    && <Link to="/"><Button>Leave Game</Button></Link>
             }
         </div>
     );

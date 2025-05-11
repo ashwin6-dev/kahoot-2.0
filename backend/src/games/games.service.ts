@@ -160,4 +160,8 @@ export class GamesService {
 
     return { token };
   }
+
+  async deleteGame(gameId: number) {
+    await this.GameModel.deleteOne({ gameId });
+  }
 }
