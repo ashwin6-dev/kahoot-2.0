@@ -4,6 +4,7 @@ import JoinPage from "./features/join-page/JoinPage";
 import HomePage from "./features/home-page/HomePage";
 import SearchPage from "@/features/search-page/SearchPage.tsx";
 import LobbyPage from "@/features/lobby-page/LobbyPage.tsx";
+import QuizPage from "@/features/quiz-page/QuizPage.tsx";
 
 export default function App() {
     return (
@@ -13,6 +14,7 @@ export default function App() {
                 <Route path="/join" element={<JoinPage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/lobby" element={<LobbyPage />} />
+                <Route path="/game" element={<QuizPage />} />
             </Routes>
         </ThemeProvider>
       )

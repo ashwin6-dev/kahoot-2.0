@@ -10,7 +10,8 @@ export const useGameFetch = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const { host, players : fetchedPlayers } = await BackendRequest.for(`games/${gameId}`).send();
+            const { players : fetchedPlayers } = await BackendRequest.for(`games/${gameId}`).send();
+            const host = fetchedPlayers.find(player => player.isHost);
             setHostName(host.name);
             setPlayers(fetchedPlayers.map(player => player.name));
         };

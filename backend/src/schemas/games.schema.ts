@@ -12,6 +12,9 @@ export class Player {
 
   @Prop({ required: true })
   token: number;
+
+  @Prop({ required: true, default: false })
+  isHost: boolean;
 }
 
 const PlayerSchema = SchemaFactory.createForClass(Player);
@@ -26,11 +29,24 @@ export class Game {
   @Prop({ type: [Types.ObjectId], ref: 'Question', required: true })
   questions: Question[];
 
-  @Prop({ type: PlayerSchema, required: true })
-  host: Player;
-
   @Prop({ type: [PlayerSchema], required: true })
   players: Player[];
+
+  @Prop({ required: true, default: 0 })
+  round: number;
+
+  @Prop({ required: true, default: Date.now() })
+  roundStart: number;
+
+  @Prop({ required: true, default: 0 })
+  answeredInRound: number;
+
+  @Prop({
+    required: true,
+    default: 'QUESTION',
+    enum: ['QUESTION', 'ROUND_SCORES', 'FINISHED'],
+  })
+  state: string;
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);
