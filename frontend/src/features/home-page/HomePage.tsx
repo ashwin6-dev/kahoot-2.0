@@ -13,23 +13,12 @@ const HomePage = () => {
                     Create and Play Quizzes
                 </h1>
                 <p className="mx-auto md:text-xl">
-                    Search for questions, join quiz rooms, or create your own questions.
+                    Search for questions, join quiz rooms and play with friends.
                 </p>
-                <div className="space-x-4">
-                    <Link to="/search">
-                        <Button className="hover:bg-primary/90">Search Questions</Button>
-                    </Link>
-                    <Link to="/join">
-                        <Button variant="outline" className="border-primary text-primary hover:bg-[#00e676]/10">
-                            Join Quiz
-                        </Button>
-                    </Link>
-                </div>
             </div>
-            <div className="grid grid-cols-3 space-x-8 mt-16">
+            <div className="grid grid-cols-2 w-3/4 mx-auto space-x-8 mt-16">
                 <SearchCard />
                 <JoinCard />
-                <CreateCard />
             </div>
         </Container>
     )

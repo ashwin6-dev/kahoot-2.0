@@ -1,11 +1,11 @@
 import {useSocket} from "@/hooks/socketHooks.ts";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 
 export const useJoinGame = (gameId: number, token: number) => {
     const { socket } = useSocket();
 
     useEffect(() => {
-        socket.emit("join-game", { gameId, token });
+        socket.emit("join-game", {gameId, token});
     }, []);
 
     return { socket }

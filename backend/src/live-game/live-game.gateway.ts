@@ -32,17 +32,10 @@ export class LiveGameGateway {
     @MessageBody('gameId') gameId: number,
     @MessageBody('token') token: number,
   ) {
-    const { name }: Player = await this.gameService.getPlayerInfo(
-      gameId,
-      token,
-    );
-
     const gameIdString = gameId.toString();
     client.join(gameIdString);
 
-    client.to(gameIdString).emit('player-joined', {
-      name,
-    });
+    client.to(gameIdString).emit('player-joined');
   }
 
   @SubscribeMessage('game-state')

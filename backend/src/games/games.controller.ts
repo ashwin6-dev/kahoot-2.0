@@ -36,10 +36,7 @@ export class GamesController {
 
   @Get(':id')
   async getGameState(@Param('id', ParseIntPipe) id: number) {
-    const gameData = await this.gamesService.getGame(id);
-    if (!gameData) gameNotFound(id);
-
-    return gameData;
+    return await this.gamesService.getGame(id);
   }
 
   @Get(':id/players/:name')
