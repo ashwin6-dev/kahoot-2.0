@@ -7,21 +7,20 @@ export const useGameFetch = () => {
     const gameId = params.get("gameId");
     const [hostName, setHostName] = useState<string>("");
     const [players, setPlayers] = useState<string[]>([]);
+    const token = parseInt(localStorage.getItem("player-token") ?? "");
+    const [isHost, setIsHost] =  useState<boolean>(false);
 
     const fetchPlayers = async () => {
         const { players : fetchedPlayers } = await BackendRequest.for(`games/${gameId}`).send();
         const host = fetchedPlayers.find(player => player.isHost);
         setHostName(host.name);
         setPlayers(fetchedPlayers.map(player => player.name));
+        setIsHost(host.token === token);
     };
 
     useEffect(() => {
         fetchPlayers();
     }, [gameId]);
 
-    const addPlayer = (newPlayer: string) => {
-        setPlayers(prevPlayers => [...prevPlayers, newPlayer])
-    }
-
-    return { hostName, gameId, players, fetchPlayers, addPlayer }
+    return { hostName, gameId, players, token, isHost, fetchPlayers }
 };
