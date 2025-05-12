@@ -131,27 +131,10 @@ export class GamesService {
       leaderboard,
     };
   }
-
-  async getPlayerInfo(gameId: number, token: number): Promise<Player> {
-    const { players }: Game = await this.getGame(gameId);
-
-    const foundPlayer: Player | undefined = players.find(
-      (player) => player.token === token,
-    );
-
-    if (!foundPlayer) {
-      return playerTokenDoestNotExist(gameId, token);
-    }
-
-    return foundPlayer;
-  }
-
   async joinGame(gameId: number, playerName: string) {
     const { players }: Game = await this.getGame(gameId);
 
-    if (
-      players.some((player) => player.name === playerName)
-    )
+    if (players.some((player) => player.name === playerName))
       return playerNameTaken(gameId, playerName);
 
     const token = generateId(PLAYER_TOKEN_LENGTH);

@@ -9,9 +9,8 @@ const LobbyPage = () => {
     const playerToken = parseInt(localStorage.getItem("player-token") ?? "")
     const { socket } = useJoinGame(gameId, playerToken);
 
-    useSocketEvent<PlayerJoinData>("player-joined", fetchPlayers);
-
-    useSocketEvent<void>("start-game", () => window.location.href = `/game?gameId=${gameId}`)
+    useSocketEvent("player-joined", fetchPlayers);
+    useSocketEvent("start-game", () => window.location.href = `/game?gameId=${gameId}`)
 
     return (
         <div className="h-screen w-screen flex flex-col items-center bg-secondary text-white p-8 space-y-2">
