@@ -2,40 +2,44 @@ import {
   Controller,
   Post,
   Get,
-  Delete,
   Body,
   Param,
   ParseIntPipe,
-  NotFoundException,
-  Query
+  Query,
 } from '@nestjs/common';
-import { GamesService } from './games.service';
-import {Question} from "../schemas/questions.schema";
-import { gameNotFound } from './errors';
+import { GameManagerService } from './services/game-manager.service';
+import { GamePlayerService } from './services/game-player.service';
+import { Question } from '../schemas/questions.schema';
 
 @Controller('games')
 export class GamesController {
-  constructor(private gamesService: GamesService) {}
+  constructor(
+    private gameManagerService: GameManagerService,
+    private gamePlayerService: GamePlayerService,
+  ) {}
 
   @Post()
   async createGame(
     @Body('questions') questions: Question[],
     @Body('hostName') hostName: string,
   ) {
-    const { gameId, token } = await this.gamesService.createGame(questions, hostName);
+    const { gameId, token } = await this.gameManagerService.createGame(
+      questions,
+      hostName,
+    );
     return { gameId, token };
   }
 
   @Get('join/:id')
   async joinGame(
     @Param('id', ParseIntPipe) id: number,
-    @Query('playerName') playerName: string
+    @Query('playerName') playerName: string,
   ) {
-    return await this.gamesService.joinGame(id, playerName);
+    return await this.gamePlayerService.joinGame(id, playerName);
   }
 
   @Get(':id')
   async getGameState(@Param('id', ParseIntPipe) id: number) {
-    return await this.gamesService.getGame(id);
+    return await this.gameManagerService.getGame(id);
   }
 }

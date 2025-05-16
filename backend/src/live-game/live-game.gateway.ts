@@ -2,13 +2,14 @@ import {
   WebSocketGateway,
   WebSocketServer,
   SubscribeMessage,
-  MessageBody, ConnectedSocket,
+  MessageBody,
+  ConnectedSocket,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { GamesService } from '../games/games.service';
-import { Player } from '../schemas/games.schema';
-import {Question} from "../schemas/questions.schema";
-
+import { Question } from '../schemas/questions.schema';
+import { GameStateService } from '../games/services/game-state.service';
+import { ScoringService } from '../games/services/scoring.service';
+import { GameManagerService } from '../games/services/game-manager.service';
 
 @WebSocketGateway({
   cors: {
@@ -18,19 +19,22 @@ import {Question} from "../schemas/questions.schema";
 export class LiveGameGateway {
   @WebSocketServer() server: Server;
 
-  constructor(private gameService: GamesService) {}
+  constructor(
+    private gameManagerService: GameManagerService,
+    private gameStateService: GameStateService,
+    private scoringService: ScoringService,
+  ) {}
 
   @SubscribeMessage('start-game')
   async startGame(@MessageBody('gameId') gameId: number) {
-    await this.gameService.startGame(gameId);
+    await this.gameStateService.startGame(gameId);
     this.server.to(gameId.toString()).emit('start-game');
   }
 
   @SubscribeMessage('join-game')
-  async handleJoinGame(
+  handleJoinGame(
     @ConnectedSocket() client: Socket,
     @MessageBody('gameId') gameId: number,
-    @MessageBody('token') token: number,
   ) {
     const gameIdString = gameId.toString();
     client.join(gameIdString);
@@ -44,7 +48,7 @@ export class LiveGameGateway {
     @MessageBody('gameId') gameId: number,
     @MessageBody('token') token: number,
   ) {
-    const gameState = await this.gameService.getGameState(gameId, token);
+    const gameState = await this.gameStateService.getGameState(gameId, token);
     client.join(gameId.toString()); // ensure socket is always in the room
     client.emit('game-update', gameState);
   }
@@ -57,7 +61,7 @@ export class LiveGameGateway {
     @MessageBody('token') token: number,
     @MessageBody('elapsed') elapsed: number, // percentage of game round time elapsed
   ) {
-    const allAnswered = await this.gameService.handleAnswer(
+    const allAnswered = await this.scoringService.handleAnswer(
       gameId,
       token,
       elapsed,
@@ -70,13 +74,13 @@ export class LiveGameGateway {
 
   @SubscribeMessage('next-state')
   async handleNextState(@MessageBody('gameId') gameId: number) {
-    await this.gameService.updateGameToNextState(gameId);
+    await this.gameStateService.updateGameToNextState(gameId);
     this.server.to(gameId.toString()).emit('state-update');
   }
 
   @SubscribeMessage('end-game')
-  async endGame(@MessageBody('gameId') gameId: number) {
-    this.gameService.deleteGame(gameId);
+  endGame(@MessageBody('gameId') gameId: number) {
+    this.gameManagerService.deleteGame(gameId);
     this.server.to(gameId.toString()).emit('end-game');
   }
 }

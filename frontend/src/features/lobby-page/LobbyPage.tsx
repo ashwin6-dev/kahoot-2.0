@@ -5,8 +5,8 @@ import {useJoinGame} from "@/features/lobby-page/hooks/useJoinGame.ts";
 import {useSocketEvent} from "@/hooks/socketHooks.ts";
 
 const LobbyPage = () => {
-    const { hostName, gameId, players, token, isHost, fetchPlayers } = useGameFetch();
-    const { socket } = useJoinGame(gameId, token);
+    const { hostName, gameId, players, isHost, fetchPlayers } = useGameFetch();
+    const { socket } = useJoinGame(gameId);
 
     useSocketEvent("player-joined", fetchPlayers);
     useSocketEvent("start-game", () => window.location.href = `/game?gameId=${gameId}`)
