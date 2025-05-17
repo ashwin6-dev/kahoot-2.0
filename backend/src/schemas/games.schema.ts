@@ -21,8 +21,6 @@ const PlayerSchema = SchemaFactory.createForClass(Player);
 
 @Schema()
 export class Game {
-  _id: ObjectId;
-
   @Prop({ required: true })
   gameId: number;
 

@@ -16,6 +16,12 @@ import { ScoringService } from '../games/services/scoring.service';
       },
     ]),
   ],
-  providers: [LiveGameGateway, GameManagerService, GamePlayerService, GameStateService, ScoringService]
+  providers: [
+    LiveGameGateway,
+    GameManagerService,
+    GamePlayerService,
+    GameStateService,
+    ScoringService,
+  ],
 })
 export class LiveGameModule {}

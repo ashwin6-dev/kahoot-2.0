@@ -1,10 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ObjectId } from 'mongoose';
 
 @Schema()
 export class Question {
-  _id: ObjectId;
-
   @Prop({ required: true })
   question: string;
 
