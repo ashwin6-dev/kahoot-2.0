@@ -14,6 +14,6 @@ export class PlayerNameTakenException extends BadRequestException {
 
 export class PlayerTokenDoesNotExistException extends BadRequestException {
   constructor(id: number, token: number) {
-    super(`Token ${token} is not in game with ID "${id}"`);
+    super(`Provided token ${token} is not in game with ID "${id}"`);
   }
 }
