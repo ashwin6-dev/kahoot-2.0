@@ -3,9 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Game } from '../../schemas/games.schema';
 import { Model } from 'mongoose';
 import { Question } from '../../schemas/questions.schema';
-import {
-  GameNotFoundException,
-} from '../errors';
+import { GameNotFoundException } from '../errors';
 import { generateId, GAME_ID_LENGTH, PLAYER_TOKEN_LENGTH } from './common';
 
 @Injectable()

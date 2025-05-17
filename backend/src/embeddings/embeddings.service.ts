@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import axios from "axios";
+import axios from 'axios';
 
 const EMBED_ENDPOINT = 'http://localhost:5000/embed';
 

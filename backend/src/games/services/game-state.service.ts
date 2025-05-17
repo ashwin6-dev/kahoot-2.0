@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Game, Player } from '../../schemas/games.schema';
 import { Model } from 'mongoose';
-import { playerTokenDoestNotExist } from '../errors';
+import { PlayerTokenDoesNotExistException } from '../errors';
 import { GameManagerService } from './game-manager.service';
 
 @Injectable()
@@ -53,7 +53,7 @@ export class GameStateService {
 
     const player = players.find((player) => player.token === token);
 
-    if (!player) return playerTokenDoestNotExist(gameId, token);
+    if (!player) throw new PlayerTokenDoesNotExistException(gameId, token);
     const playerScore = player.score;
 
     const leaderboard = players

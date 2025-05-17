@@ -17,6 +17,11 @@ import { ScoringService } from './services/scoring.service';
     ]),
   ],
   controllers: [GamesController],
-  providers: [GameManagerService, GamePlayerService, GameStateService, ScoringService],
+  providers: [
+    GameManagerService,
+    GamePlayerService,
+    GameStateService,
+    ScoringService,
+  ],
 })
 export class GamesModule {}

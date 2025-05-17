@@ -13,7 +13,13 @@ dotenv.config();
 const uri: string = process.env.MONGODB_URI || '';
 
 @Module({
-  imports: [GamesModule, QuestionsModule, MongooseModule.forRoot(uri), EmbeddingsModule, LiveGameModule],
+  imports: [
+    GamesModule,
+    QuestionsModule,
+    MongooseModule.forRoot(uri),
+    EmbeddingsModule,
+    LiveGameModule,
+  ],
   controllers: [AppController],
   providers: [AppService, EmbeddingsService],
 })
