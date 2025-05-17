@@ -16,13 +16,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
-      - run: |
-          cd backend
-          npm install
-          npm run test
+      - run: npm install && npm run test
+        working-directory: ./backend
