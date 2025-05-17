@@ -1,1 +1,5 @@
 token.txt
+.idea
+.vite
+venv
+__pycache__
